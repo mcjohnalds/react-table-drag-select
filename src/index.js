@@ -24,7 +24,9 @@ export default class extends React.Component {
     this.handleTouchEndWindow = this.handleTouchEndWindow.bind(this);
     this.handleTouchStartCell = this.handleTouchStartCell.bind(this);
     this.handleTouchMoveCell = this.handleTouchMoveCell.bind(this);
-    this.props.clearRef(this.clear);
+    if (this.props.clearRef) {
+      this.props.clearRef(this.clear);
+    }
   }
 
   componentDidMount() {
