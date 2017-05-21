@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 export default class extends React.Component {
   constructor(props) {
@@ -18,13 +17,12 @@ export default class extends React.Component {
   componentDidMount() {
     // We need to call addEventListener ourselves so that we can pass
     // {passive: false}
-    const td = ReactDOM.findDOMNode(this);
-    td.addEventListener(
+    this.td.addEventListener(
       'touchstart',
       this.handleTouchStart,
       {passive: false}
     );
-    td.addEventListener(
+    this.td.addEventListener(
       'touchmove',
       this.handleTouchMove,
       {passive: false}
@@ -32,9 +30,8 @@ export default class extends React.Component {
   }
 
   componentWillUnmount() {
-    const td = ReactDOM.findDOMNode(this);
-    td.removeEventListener('touchstart', this.handleTouchStart);
-    td.removeEventListener('touchmove', this.handleTouchMove);
+    this.td.removeEventListener('touchstart', this.handleTouchStart);
+    this.td.removeEventListener('touchmove', this.handleTouchMove);
   }
 
   render() {
@@ -55,6 +52,7 @@ export default class extends React.Component {
     }
     return (
       <td
+        ref={td => this.td = td}
         className={className}
         onMouseDown={this.handleTouchStart}
         onMouseMove={this.handleTouchMove}
