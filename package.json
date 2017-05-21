@@ -1,6 +1,6 @@
 {
   "name": "react-table-drag-select",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "React component for drag selecting table cells",
   "keywords": [
     "react",
