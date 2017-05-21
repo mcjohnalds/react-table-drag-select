@@ -1,0 +1,53 @@
+.tabular-multi-select table {
+  /* Stretch horizontally to fill parent */
+  width: 100%;
+  /* Keep columns same width */
+  table-layout: fixed;
+  /* Disable text selection */
+  user-select: none;
+  /* Center in parent */
+  margin-left: auto;
+  margin-right: auto;
+  /* Remove space between border */
+  border-collapse: collapse;
+}
+
+/* Table cells */
+.tabular-multi-select td {
+  text-align: center;
+  /* Cut off long strings of text with ... */
+  text-overflow: ellipsis;
+  overflow: hidden;
+  /* Make transparent gaps between cells. Better than relying on margin
+   * because clicking an element's margin doesn't trigger events */
+  border: 0.7rem solid transparent;
+  background-clip: padding-box;
+  /* Make cells reasonable size */
+  line-height: 3rem;
+  /* Shows more text when text too big to fit into cell */
+  padding-left: 0rem;
+  padding-right: 0rem;
+}
+
+/* Cells that can be interacted with */
+.tabular-multi-select td.cell-enabled {
+  background-color: #DDD;
+  /* Make the cursor a + symbol */
+  cursor: cell;
+}
+
+/* Cells that cannot be interacted with */
+.tabular-multi-select td.cell-disabled {
+  /* Put yer css here */
+}
+
+/* Cells that have been selected */
+.tabular-multi-select td.cell-selected {
+  background-color: #A9A9A9;
+}
+
+/* Cells that are in the process of being selected */
+.tabular-multi-select td.cell-being-selected {
+  /* This is the blue color you see when you select text with the cursor */
+  background-color: #3F83D5;
+}

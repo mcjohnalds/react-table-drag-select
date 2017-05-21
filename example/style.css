@@ -1,0 +1,90 @@
+html {
+  font-family: 'Muli', sans-serif;
+}
+
+body {
+  max-width: 100%;
+  width: 60rem;
+  background-color: #FFFFFB;
+  /* Center horizontally */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h1, h2, div, pre, td {
+  color: #313638;
+  /* Bold headers are unnecessary */
+  font-weight: normal;
+}
+
+a {
+  color: #888;
+}
+
+h2 {
+  margin-top: 2rem;
+}
+
+pre {
+  padding: 0.5rem;
+  background-color: #FBF1E8;
+}
+
+button {
+  float: right;
+  padding: 0.3rem 0.5rem;
+}
+
+.flash {
+  animation-name: flash;
+  animation-duration: 0.5s;
+}
+
+@keyframes flash {
+  from {
+    background-color: #C9FB7E;
+  }
+
+  to {
+    background-color: #FBF1E8;
+  }
+}
+
+.table-container {
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+/* Cells that can be interacted with */
+.tabular-multi-select td.cell-enabled {
+  color: #806E52;
+  background-color: #FBF1E8;
+}
+
+/* Cells that cannot be interacted with */
+.tabular-multi-select td.cell-disabled {
+  /* Put yer css here */
+}
+
+/* Cells that have been selected */
+.tabular-multi-select td.cell-selected {
+  background-color: #FBD5D4;
+}
+
+/* Cells that are in the process of being selected */
+.tabular-multi-select td.cell-being-selected {
+  background-color: #EACA96;
+}
+
+/* Cells in first row */
+.tabular-multi-select tr:first-child td {
+  /* Remove empty space at top of table */
+  border-top: 0;
+  line-height: 1rem;
+}
+
+/* Cells in first column */
+.tabular-multi-select td:first-child {
+  /* Consume less whitespace */
+  width: 3rem;
+}
