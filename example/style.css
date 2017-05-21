@@ -56,35 +56,35 @@ button {
 }
 
 /* Cells that can be interacted with */
-.tabular-multi-select td.cell-enabled {
+.table-drag-select td.cell-enabled {
   color: #806E52;
   background-color: #FBF1E8;
 }
 
 /* Cells that cannot be interacted with */
-.tabular-multi-select td.cell-disabled {
+.table-drag-select td.cell-disabled {
   /* Put yer css here */
 }
 
 /* Cells that have been selected */
-.tabular-multi-select td.cell-selected {
+.table-drag-select td.cell-selected {
   background-color: #FBD5D4;
 }
 
 /* Cells that are in the process of being selected */
-.tabular-multi-select td.cell-being-selected {
+.table-drag-select td.cell-being-selected {
   background-color: #EACA96;
 }
 
 /* Cells in first row */
-.tabular-multi-select tr:first-child td {
+.table-drag-select tr:first-child td {
   /* Remove empty space at top of table */
   border-top: 0;
   line-height: 1rem;
 }
 
 /* Cells in first column */
-.tabular-multi-select td:first-child {
+.table-drag-select td:first-child {
   /* Consume less whitespace */
   width: 3rem;
 }

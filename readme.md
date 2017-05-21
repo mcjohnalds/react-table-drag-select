@@ -1,8 +1,8 @@
-# react-tabular-multi-select
+# react-table-drag-select
 
 ![Animation of the component](img/demo.gif)
 
-[View the live demo.](https://mcjohnalds.github.io/react-tabular-select)
+[View the live demo.](https://mcjohnalds.github.io/react-table-drag-select)
 
   - Runs fast
   - Good for making timetables
@@ -12,7 +12,7 @@
 ## Installation
 
 ```sh
-npm i -S react-tabular-multi-select
+npm i -S react-table-drag-select
 ```
 
 ## Basic usage
@@ -20,12 +20,12 @@ npm i -S react-tabular-multi-select
 ```jsx
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TabularMultiSelect from 'react-tabular-multi-select'
+import TableDragSelect from 'react-table-drag-select'
 
 // A 7x6 table like what is seen in the gif
 function App() {
   return (
-    <TabularMultiSelect onChange={e => console.log(e)}>
+    <TableDragSelect onChange={e => console.log(e)}>
       <tr><td /> <td /> <td /> <td /> <td /> <td /></tr>
       <tr><td /> <td /> <td /> <td /> <td /> <td /></tr>
       <tr><td /> <td /> <td /> <td /> <td /> <td /></tr>
@@ -33,7 +33,7 @@ function App() {
       <tr><td /> <td /> <td /> <td /> <td /> <td /></tr>
       <tr><td /> <td /> <td /> <td /> <td /> <td /></tr>
       <tr><td /> <td /> <td /> <td /> <td /> <td /></tr>
-    </TabularMultiSelect>
+    </TableDragSelect>
   );
 }
 
@@ -64,9 +64,9 @@ The component can pass a function to its parent which clears all cells.
 class App extends React.Component {
   return (
     <div>
-      <TabularMultiSelect clearRef={clear => this.clearTable = clear}>
+      <TableDragSelect clearRef={clear => this.clearTable = clear}>
         ...
-      </TabularMultiSelect>
+      </TableDragSelect>
       <button onClick={this.clearTable}>Reset cells</button>
     <div>
   );
@@ -78,7 +78,7 @@ class App extends React.Component {
 You can disable some cells. Example:
 
 ```jsx
-<TabularMutliSelect>
+<TableDragSelect>
   <tr>
     <td disabled>This is disabled</td>
     <td disabled>This is disabled</td>
@@ -94,42 +94,42 @@ You can disable some cells. Example:
     <td>Not disabled</td>
     <td>Not disabled</td>
   </tr>
-</TabularMultiSelect>
+</TableDragSelect>
 ```
 
 ## CSS
 
-Copy `node_modules/react-tabular-multi-select/tabular-multi-select.css` into
+Copy `node_modules/react-table-drag-select/table-drag-select.css` into
 your static folder and link to it in your html.
 
 The default theme is good for any website but you might want to change the
 colors. This can be done by editing the nicely commented
-`tabular-multi-select.css`, or by adding some global css rules:
+`table-drag-select.css`, or by adding some global css rules:
 
 ```css
 /* Cells that can be interacted with */
-.tabular-multi-select td.cell-enabled {
+.table-drag-select td.cell-enabled {
   color: #806E52;
   background-color: #FBF1E8;
 }
 
 /* Cells that cannot be interacted with */
-.tabular-multi-select td.cell-disabled {
+.table-drag-select td.cell-disabled {
   /* Put yer css here, or don't */
 }
 
 /* Cells that have been selected */
-.tabular-multi-select td.cell-selected {
+.table-drag-select td.cell-selected {
   background-color: #FBD5D4;
 }
 
 /* Cells that are in the process of being selected */
-.tabular-multi-select td.cell-being-selected {
+.table-drag-select td.cell-being-selected {
   background-color: #EACA96;
 }
 ```
 
 ## Contributing
 
-[Open an issue on github](https://github.com/mcjohnalds/react-tabular-multi-select/issues/new)
+[Open an issue on github](https://github.com/mcjohnalds/react-table-drag-select/issues/new)
 or submit a pull request (remember to run `npm test` first)

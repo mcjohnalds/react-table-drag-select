@@ -58,7 +58,7 @@ export default class extends React.Component {
   render() {
     const {onChange, clearRef, ...props} = this.props;
     return (
-      <div className="tabular-multi-select">
+      <div className="table-drag-select">
         <table {...props}>
           <tbody>
             {this.modifyChildren()}
@@ -106,9 +106,7 @@ export default class extends React.Component {
   validateChildren() {
     for (const tr of this.props.children) {
       if (tr.type !== 'tr') {
-        throw TypeError(
-          'A <TabularMultiSelect> must only contain <tr> children'
-        );
+        throw TypeError('A <TableDragSelect> must only contain <tr> children');
       }
       if (React.Children.count(tr.props.children) !== this.columns) {
         throw TypeError('All rows must have the same number of columns');

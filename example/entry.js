@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TabularMultiSelect from '../src';
-import '../tabular-multi-select.css';
+import TableDragSelect from '../src';
+import '../table-drag-select.css';
 import './style.css';
 
 const jsCode = `import React from 'react';
 import ReactDOM from 'react-dom';
-import TabularMultiSelect from 'react-tabular-multi-select';
+import TableDragSelect from 'react-table-drag-select';
 
 function App() {
   return (
-    <TabularMultiSelect
+    <TableDragSelect
       onChange={e => ... /* Your handler goes here */}
       clearRef={clear => ... /* clear() clears all cells */}
     >
@@ -86,14 +86,14 @@ function App() {
         <td />
         <td>overtime</td>
       </tr>
-    </TabularMultiSelect>
+    </TableDragSelect>
   );
 }
 
 ReactDOM.render(<App />, document.getElementById('timetable'));`;
 
 const resultingDOM = `<div id="timetable">
-  <table className="tabular-mutli-select">
+  <table className="table-drag-select">
     <tbody>
       <tr>
         <td className="cell-disabled" />
@@ -172,38 +172,38 @@ const resultingDOM = `<div id="timetable">
 </div>
 `;
 
-const cssCode = `<link rel="stylesheet" href="tabular-multi-select.css">
+const cssCode = `<link rel="stylesheet" href="table-drag-select.css">
 <style>
   /* Cells that can be interacted with */
-  .tabular-multi-select td.cell-enabled {
+  .table-drag-select td.cell-enabled {
     color: #806E52;
     background-color: #FBF1E8;
   }
   
   /* Cells that cannot be interacted with */
-  .tabular-multi-select td.cell-disabled {
+  .table-drag-select td.cell-disabled {
     /* Put yer css here */
   }
   
   /* Cells that have been selected */
-  .tabular-multi-select td.cell-selected {
+  .table-drag-select td.cell-selected {
     background-color: #FBD5D4;
   }
   
   /* Cells that are in the process of being selected */
-  .tabular-multi-select td.cell-being-selected {
+  .table-drag-select td.cell-being-selected {
     background-color: #EACA96;
   }
   
   /* Cells in first row */
-  .tabular-multi-select tr:first-child td {
+  .table-drag-select tr:first-child td {
     /* Remove empty space at top of table */
     border-top: 0;
     line-height: 1rem;
   }
   
   /* Cells in first column */
-  .tabular-multi-select td:first-child {
+  .table-drag-select td:first-child {
     /* Consume less whitespace */
     width: 3rem;
   }
@@ -231,13 +231,13 @@ class App extends React.Component {
     return (
       <div>
         <h1>
-          <a href="https://github.com/mcjohnalds/react-tabular-multi-select">
-            <code>react-tabular-multi-select</code>
+          <a href="https://github.com/mcjohnalds/react-table-drag-select">
+            <code>react-table-drag-select</code>
           </a> demo
         </h1>
         <h2>Timetable</h2>
         <div className="table-container">
-          <TabularMultiSelect
+          <TableDragSelect
             onChange={this.handleChange}
             clearRef={clear => this.clearTable = clear}
           >
@@ -313,7 +313,7 @@ class App extends React.Component {
               <td />
               <td>overtime</td>
             </tr>
-          </TabularMultiSelect>
+          </TableDragSelect>
         </div>
         <button onClick={this.clearTable}>Reset</button>
         <h2><code>{'onChange={e => ...}'}</code> callback</h2>

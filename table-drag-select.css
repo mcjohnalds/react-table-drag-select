@@ -1,4 +1,4 @@
-.tabular-multi-select table {
+.table-drag-select table {
   /* Stretch horizontally to fill parent */
   width: 100%;
   /* Keep columns same width */
@@ -13,7 +13,7 @@
 }
 
 /* Table cells */
-.tabular-multi-select td {
+.table-drag-select td {
   text-align: center;
   /* Cut off long strings of text with ... */
   text-overflow: ellipsis;
@@ -30,24 +30,24 @@
 }
 
 /* Cells that can be interacted with */
-.tabular-multi-select td.cell-enabled {
+.table-drag-select td.cell-enabled {
   background-color: #DDD;
   /* Make the cursor a + symbol */
   cursor: cell;
 }
 
 /* Cells that cannot be interacted with */
-.tabular-multi-select td.cell-disabled {
+.table-drag-select td.cell-disabled {
   /* Put yer css here */
 }
 
 /* Cells that have been selected */
-.tabular-multi-select td.cell-selected {
+.table-drag-select td.cell-selected {
   background-color: #A9A9A9;
 }
 
 /* Cells that are in the process of being selected */
-.tabular-multi-select td.cell-being-selected {
+.table-drag-select td.cell-being-selected {
   /* This is the blue color you see when you select text with the cursor */
   background-color: #3F83D5;
 }

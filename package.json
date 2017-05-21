@@ -1,17 +1,19 @@
 {
-  "name": "react-tabular-multi-select",
+  "name": "react-table-drag-select",
   "version": "0.0.0",
-  "description": "React component for selecting multiple table cells",
+  "description": "React component for drag selecting table cells",
   "keywords": [
+    "react",
     "component",
     "table",
+    "select",
+    "cell",
     "cells",
     "timetable",
-    "schedule",
-    "cell"
+    "schedule"
   ],
-  "url": "https://github.com/mcjohnalds/react-tabular-multi-select",
-  "bugs": "https://github.com/mcjohnalds/react-tabular-multi-select/bugs",
+  "url": "https://github.com/mcjohnalds/react-table-drag-select",
+  "bugs": "https://github.com/mcjohnalds/react-table-drag-select/bugs",
   "license": "MIT",
   "author": {
     "name": "John Owen",
@@ -20,7 +22,7 @@
   },
   "files": "lib",
   "main": "lib",
-  "repository": "mcjohnalds/react-tabular-multi-select",
+  "repository": "mcjohnalds/react-table-drag-select",
   "scripts": {
     "build-js": "babel -s true -d lib src",
     "build-docs": "webpack",
