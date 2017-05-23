@@ -102,7 +102,7 @@ class App extends React.Component {
       <TableDragSelect clearRef={clear => this.clearTable = clear}>
         ...
       </TableDragSelect>
-      <button onClick={this.clearTable}>Reset cells</button>
+      <button onClick={e => this.clearTable()}>Reset cells</button>
     <div>
   );
 }

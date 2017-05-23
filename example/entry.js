@@ -315,7 +315,7 @@ class App extends React.Component {
             </tr>
           </TableDragSelect>
         </div>
-        <button onClick={this.clearTable}>Reset</button>
+        <button onClick={e => this.clearTable()}>Reset</button>
         <h2><code>{'onChange={e => ...}'}</code> callback</h2>
         <pre ref="output">
           e.cellsSelected = {stringifyBoolMatrix(this.state.cellsSelected)}
