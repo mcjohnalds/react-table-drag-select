@@ -1,6 +1,6 @@
 {
   "name": "react-table-drag-select",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "React component for drag selecting table cells",
   "keywords": [
     "react",
@@ -20,7 +20,10 @@
     "email": "johnowen357@gmail.com",
     "url": "https://github.com/mcjohnalds"
   },
-  "files": ["lib", "table-drag-select.css"],
+  "files": [
+    "lib",
+    "table-drag-select.css"
+  ],
   "main": "lib",
   "repository": "mcjohnalds/react-table-drag-select",
   "scripts": {
