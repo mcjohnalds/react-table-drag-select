@@ -18,8 +18,8 @@ export default class extends React.Component {
     {
       throw Error('onChange must be a function');
     }
-    this.state = {model: this.initModel()};
     this.validateChildren();
+    this.state = {model: this.initModel()};
     this.clear = this.clear.bind(this);
     this.handleTouchEndWindow = this.handleTouchEndWindow.bind(this);
     this.handleTouchStartCell = this.handleTouchStartCell.bind(this);
@@ -112,9 +112,9 @@ export default class extends React.Component {
       if (React.Children.count(tr.props.children) !== this.columns) {
         throw TypeError('All rows must have the same number of columns');
       }
-      for (const cell of tr.props.children) {
-        if (cell instanceof Cell) {
-          throw TypeError('A <tr> must only contain <Cell> children');
+      for (const td of tr.props.children) {
+        if (td.type !== 'td') {
+          throw TypeError('A <tr> must only contain <td> children');
         }
       }
     }
