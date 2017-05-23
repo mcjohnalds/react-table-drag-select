@@ -4,9 +4,8 @@
 
 [View the live demo.](https://mcjohnalds.github.io/react-table-drag-select)
 
-  - Runs fast
-  - Good for making timetables
-  - Efficient and intuitive way to handle user input of any large boolean matrix
+  - Ultra fast
+  - Good for user inputted timetables
   - Less than 5kB when gzipped
 
 ## Installation
@@ -22,17 +21,52 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import TableDragSelect from 'react-table-drag-select'
 
-// A 7x6 table like what is seen in the gif
+// A table like what is seen in the gif
 function App() {
   return (
     <TableDragSelect onChange={e => console.log(e)}>
-      <tr><td /> <td /> <td /> <td /> <td /> <td /></tr>
-      <tr><td /> <td /> <td /> <td /> <td /> <td /></tr>
-      <tr><td /> <td /> <td /> <td /> <td /> <td /></tr>
-      <tr><td /> <td /> <td /> <td /> <td /> <td /></tr>
-      <tr><td /> <td /> <td /> <td /> <td /> <td /></tr>
-      <tr><td /> <td /> <td /> <td /> <td /> <td /></tr>
-      <tr><td /> <td /> <td /> <td /> <td /> <td /></tr>
+      <tr>
+        <td />
+        <td />
+        <td />
+        <td />
+        <td />
+      </tr>
+      <tr>
+        <td />
+        <td />
+        <td />
+        <td />
+        <td />
+      </tr>
+      <tr>
+        <td />
+        <td />
+        <td />
+        <td />
+        <td />
+      </tr>
+      <tr>
+        <td />
+        <td />
+        <td />
+        <td />
+        <td />
+      </tr>
+      <tr>
+        <td />
+        <td />
+        <td />
+        <td />
+        <td />
+      </tr>
+      <tr>
+        <td />
+        <td />
+        <td />
+        <td />
+        <td />
+      </tr>
     </TableDragSelect>
   );
 }
@@ -40,7 +74,8 @@ function App() {
 ReactDOM.render(<App />, document.getElementById('timetable'));
 ```
 
-Prints stuff like
+Thanks to the `onChange` handler, whenever the user changes the selected cells,
+the above example prints stuff like
 
 ```js
 {
@@ -58,7 +93,7 @@ Prints stuff like
 
 ## Clearing all cells
 
-The component can pass a function to its parent which clears all cells.
+The component can pass you a function which clears all cells.
 
 ```jsx
 class App extends React.Component {
@@ -75,7 +110,7 @@ class App extends React.Component {
 
 ## Disabling some cells
 
-You can disable some cells. Example:
+You can disable cells individually. Example:
 
 ```jsx
 <TableDragSelect>
@@ -102,9 +137,9 @@ You can disable some cells. Example:
 Copy `node_modules/react-table-drag-select/table-drag-select.css` into
 your static folder and link to it in your html.
 
-The default theme is good for any website but you might want to change the
-colors. This can be done by editing the nicely commented
-`table-drag-select.css`, or by adding some global css rules:
+The default theme is flexible but you'll want to change the colors. This can be
+done by editing the nicely commented `table-drag-select.css`, or by adding some
+global css rules:
 
 ```css
 /* Cells that can be interacted with */
