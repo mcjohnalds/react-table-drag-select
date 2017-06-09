@@ -22,7 +22,7 @@
   },
   "files": [
     "lib",
-    "table-drag-select.css"
+    "style.css"
   ],
   "main": "lib",
   "repository": "mcjohnalds/react-table-drag-select",
