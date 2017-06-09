@@ -26,7 +26,7 @@ import 'react-table-drag-select/style.css';
 
 ## Basic usage
 
-```
+```jsx
 class App extends React.Component {
   constructor() {
     super();
@@ -191,6 +191,46 @@ If you're using webpack, css-loader, and style-loader, then just
 
 If not, copy `node_modules/react-table-drag-select/style.css` into your project
 `<link>` to it in your html.
+
+## Customizing styles
+
+This isn't required, but changing the colors can really spruce things up.
+
+```css
+/* Cells that can be interacted with */
+.table-drag-select td.cell-enabled {
+  color: #806E52;
+  background-color: #FBF1E8;
+}
+
+/* Cells that cannot be interacted with */
+.table-drag-select td.cell-disabled {
+  /* Put yer css here, or don't */
+}
+
+/* Cells that have been selected */
+.table-drag-select td.cell-selected {
+  background-color: #FBD5D4;
+}
+
+/* Cells that are in the process of being selected */
+.table-drag-select td.cell-being-selected {
+  background-color: #EACA96;
+}
+
+/* Cells in first row */
+.table-drag-select tr:first-child td {
+  /* Remove empty space at top of table */
+  border-top: 0;
+  line-height: 1rem;
+}
+
+/* Cells in first column */
+.table-drag-select td:first-child {
+  /* Consume less whitespace */
+  width: 3rem;
+}
+```
 
 ## Contributing
 
