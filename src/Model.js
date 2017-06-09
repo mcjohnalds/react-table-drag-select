@@ -11,6 +11,14 @@ export default class {
     this._resetSelectedCells();
   }
 
+  getRowCount() {
+    return this._rows;
+  }
+
+  getColumnCount() {
+    return this._columns;
+  }
+
   // Returns an array indication which cells have been selected. For example
   // the return value
   //
