@@ -16,99 +16,103 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      model: new TableDragSelect.Model()
+      model: new TableDragSelect.Model(8, 7) // Specify rows and columns
     };
     this.handleModelChange = this.handleModelChange.bind(this);
     this.resetTable = this.resetTable.bind(this);
   }
 
-  return (
-    <div>
-      <h2>Timetable</h2>
-      <TableDragSelect
-        model={this.state.model}
-        onModelChange={this.handleModelChange}
-      >
-        <tr>
-          <td disabled />
-          <td disabled>Monday</td>
-          <td disabled>Tuesday</td>
-          <td disabled>Wednesday</td>
-          <td disabled>Thursday</td>
-          <td disabled>Friday</td>
-          <td disabled>Saturday</td>
-        </tr>
-        <tr>
-          <td disabled>10:00</td>
-          <td />
-          <td />
-          <td />
-          <td />
-          <td />
-          <td>overtime</td>
-        </tr>
-        <tr>
-          <td disabled>11:00</td>
-          <td />
-          <td />
-          <td />
-          <td />
-          <td />
-          <td>overtime</td>
-        </tr>
-        <tr>
-          <td disabled>12:00</td>
-          <td />
-          <td />
-          <td />
-          <td />
-          <td />
-          <td>overtime</td>
-        </tr>
-        <tr>
-          <td disabled>13:00</td>
-          <td />
-          <td />
-          <td />
-          <td />
-          <td />
-          <td>overtime</td>
-        </tr>
-        <tr>
-          <td disabled>14:00</td>
-          <td />
-          <td />
-          <td />
-          <td />
-          <td />
-          <td>overtime</td>
-        </tr>
-        <tr>
-          <td disabled>15:00</td>
-          <td />
-          <td />
-          <td />
-          <td />
-          <td />
-          <td>overtime</td>
-        </tr>
-        <tr>
-          <td disabled>16:00</td>
-          <td />
-          <td />
-          <td />
-          <td />
-          <td />
-          <td>overtime</td>
-        </tr>
-      </TableDragSelect>
-      <button onClick={resetTable}>Reset</Reset>
-      <h2>onModelChange callback</h2>
-      <pre>
-        model.getCellsSelected() === {JSON.stringify(this.state.model.getCellsSelected())}
-      </pre>
-  </div>
-  );
+  render() {
+    return (
+      <div>
+        <h2>Timetable</h2>
+        <TableDragSelect
+          model={this.state.model}
+          onModelChange={this.handleModelChange}
+        >
+          <tr>
+            <td disabled />
+            <td disabled>Monday</td>
+            <td disabled>Tuesday</td>
+            <td disabled>Wednesday</td>
+            <td disabled>Thursday</td>
+            <td disabled>Friday</td>
+            <td disabled>Saturday</td>
+          </tr>
+          <tr>
+            <td disabled>10:00</td>
+            <td />
+            <td />
+            <td />
+            <td />
+            <td />
+            <td>overtime</td>
+          </tr>
+          <tr>
+            <td disabled>11:00</td>
+            <td />
+            <td />
+            <td />
+            <td />
+            <td />
+            <td>overtime</td>
+          </tr>
+          <tr>
+            <td disabled>12:00</td>
+            <td />
+            <td />
+            <td />
+            <td />
+            <td />
+            <td>overtime</td>
+          </tr>
+          <tr>
+            <td disabled>13:00</td>
+            <td />
+            <td />
+            <td />
+            <td />
+            <td />
+            <td>overtime</td>
+          </tr>
+          <tr>
+            <td disabled>14:00</td>
+            <td />
+            <td />
+            <td />
+            <td />
+            <td />
+            <td>overtime</td>
+          </tr>
+          <tr>
+            <td disabled>15:00</td>
+            <td />
+            <td />
+            <td />
+            <td />
+            <td />
+            <td>overtime</td>
+          </tr>
+          <tr>
+            <td disabled>16:00</td>
+            <td />
+            <td />
+            <td />
+            <td />
+            <td />
+            <td>overtime</td>
+          </tr>
+        </TableDragSelect>
+        <button onClick={this.resetTable}>Reset</button>
+        <h2>onModelChange callback</h2>
+        <pre>
+          model.getCellsSelected() === {
+            prettyPrintMatrix(this.state.model.getCellsSelected())
+          }
+        </pre>
+      </div>
+    );
+  }
 
   handleModelChange(model) {
     this.setState({model});
@@ -121,7 +125,13 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('timetable'));`;
+function prettyPrintMatrix(matrix) {
+  return '[\\n' + matrix.map(row => '  ' + JSON.stringify(row)).join('\\n') + '\\n]';
+}
+
+const div = document.createElement('div');
+document.body.appendChild(div);
+ReactDOM.render(<App />, div);`;
 
 const cssCode = `/* Cells that can be interacted with */
 .table-drag-select td.cell-enabled {
@@ -157,7 +167,7 @@ const cssCode = `/* Cells that can be interacted with */
   width: 3rem;
 }`;
 
-const resultingDOM = `<div id="timetable">
+const resultingDOM = `<div>
   <h2>Timetable</h2>
   <table class="table-drag-select">
     <tbody>
@@ -354,9 +364,13 @@ class App extends React.Component {
         <pre ref="output">
           model.getCellsSelected() === {stringifyBoolMatrix(this.state.model.getCellsSelected())}
         </pre>
-        <h2><code>script.js</code></h2>
+        <h2>Javascript</h2>
         <pre>{jsCode}</pre>
-        <h2><code>style.css</code></h2>
+        <h2>Optional styling</h2>
+        <p>
+          This isn't required, but changing the colors can really spruce things
+          up.
+        </p>
         <pre>{cssCode}</pre>
         <h2>Resulting DOM</h2>
         <pre>{resultingDOM}</pre>
