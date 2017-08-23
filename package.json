@@ -20,10 +20,7 @@
     "email": "johnowen357@gmail.com",
     "url": "https://github.com/mcjohnalds"
   },
-  "files": [
-    "lib",
-    "style.css"
-  ],
+  "files": ["lib", "style.css"],
   "main": "lib",
   "repository": "mcjohnalds/react-table-drag-select",
   "scripts": {
@@ -31,8 +28,12 @@
     "build-docs": "webpack",
     "build-all": "npm run build-js && npm run build-docs",
     "test": "npm run build-js && mocha --compilers js:babel-core/register",
-    "prepublish": "NODE_ENV=production npm run build-all",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "precommit": "lint-staged && NODE_ENV=production npm run build-all"
+  },
+  "lint-staged": {
+    "*.js": ["prettier --write", "git add"],
+    "*.json": ["prettier --parser json --write", "git add"]
   },
   "dependencies": {
     "clone": "^2.1.1",
@@ -50,7 +51,10 @@
     "chai": "^3.5.0",
     "css-loader": "^0.28.1",
     "html-webpack-plugin": "^2.28.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^4.0.3",
     "mocha": "^3.3.0",
+    "prettier": "^1.5.3",
     "react-dom": "^15.5.4",
     "style-loader": "^0.17.0",
     "webpack": "^2.4.1",

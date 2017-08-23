@@ -1,5 +1,5 @@
-import clone from 'clone';
-import equal from 'deep-is';
+import clone from "clone";
+import equal from "deep-is";
 
 // The 'model' part of the model-view pattern
 export default class {
@@ -109,10 +109,12 @@ export default class {
     }
     // Axis-aligned bounding box test
     const rect = this._getSelectionRectangle();
-    return row >= rect.minRow &&
+    return (
+      row >= rect.minRow &&
       row <= rect.maxRow &&
       column >= rect.minColumn &&
-      column <= rect.maxColumn;
+      column <= rect.maxColumn
+    );
   }
 
   // Return corners of an axis-aligned bounding box

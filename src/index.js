@@ -1,8 +1,8 @@
-import React from 'react';
-import equal from 'deep-is';
-import Model from './Model';
-import Cell from './Cell';
-import eventToCellLocation from './eventToCellLocation';
+import React from "react";
+import equal from "deep-is";
+import Model from "./Model";
+import Cell from "./Cell";
+import eventToCellLocation from "./eventToCellLocation";
 
 export default class extends React.PureComponent {
   static Model = Model;
@@ -13,10 +13,11 @@ export default class extends React.PureComponent {
     if (this.props.model.getRowCount() === 0) {
       return;
     }
-    if (this.props.onModelChange !== undefined &&
-      typeof this.props.onModelChange !== 'function')
-    {
-      throw Error('onModelChange must be a function');
+    if (
+      this.props.onModelChange !== undefined &&
+      typeof this.props.onModelChange !== "function"
+    ) {
+      throw Error("onModelChange must be a function");
     }
     this.handleTouchEndWindow = this.handleTouchEndWindow.bind(this);
     this.handleTouchStartCell = this.handleTouchStartCell.bind(this);
@@ -24,17 +25,17 @@ export default class extends React.PureComponent {
   }
 
   componentDidMount() {
-    window.addEventListener('mouseup', this.handleTouchEndWindow);
-    window.addEventListener('touchend', this.handleTouchEndWindow);
+    window.addEventListener("mouseup", this.handleTouchEndWindow);
+    window.addEventListener("touchend", this.handleTouchEndWindow);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('mouseup', this.handleTouchEndWindow);
-    window.removeEventListener('touchend', this.handleTouchEndWindow);
+    window.removeEventListener("mouseup", this.handleTouchEndWindow);
+    window.removeEventListener("touchend", this.handleTouchEndWindow);
   }
 
   render() {
-    const {model, onModelChange, ...props} = this.props;
+    const { model, onModelChange, ...props } = this.props;
     return (
       <div className="table-drag-select">
         <table {...props}>
@@ -76,27 +77,27 @@ export default class extends React.PureComponent {
 
   // Throws an error if the structure of this.props.children is wrong
   validateChildren() {
-    const {rows, columns} = this.getChildrenDimensions();
+    const { rows, columns } = this.getChildrenDimensions();
     if (React.Children.count(this.props.children) !== rows) {
       throw new TypeError(
-        'Mismatch between model row count and children row count'
+        "Mismatch between model row count and children row count"
       );
     }
     for (const tr of this.props.children) {
-      if (tr.type !== 'tr') {
+      if (tr.type !== "tr") {
         throw new TypeError(
-          'A <TableDragSelect> must only contain <tr> children'
+          "A <TableDragSelect> must only contain <tr> children"
         );
       }
       let childColumns = React.Children.count(tr.props.children);
       if (childColumns !== this.props.model.getColumnCount()) {
         throw new TypeError(
-          'Mismatch between model column count and children column count'
+          "Mismatch between model column count and children column count"
         );
       }
       for (const td of tr.props.children) {
-        if (td.type !== 'td') {
-          throw new TypeError('A <tr> must only contain <td> children');
+        if (td.type !== "td") {
+          throw new TypeError("A <tr> must only contain <td> children");
         }
       }
     }
@@ -106,15 +107,15 @@ export default class extends React.PureComponent {
   getChildrenDimensions() {
     const rows = React.Children.count(this.props.children);
     if (rows === 0) {
-      return {rows: 0, columns: 0};
+      return { rows: 0, columns: 0 };
     }
     const firstRow = this.props.children[0];
     const columns = React.Children.count(firstRow.props.children);
-    return {rows, columns};
+    return { rows, columns };
   }
 
   handleTouchEndWindow(e) {
-    if (e.type === 'mouseup' && e.button !== 0) {
+    if (e.type === "mouseup" && e.button !== 0) {
       return;
     }
     const model = this.props.model.clone();
@@ -125,11 +126,11 @@ export default class extends React.PureComponent {
   }
 
   handleTouchStartCell(e) {
-    if (e.type === 'mousedown' && e.button !== 0) {
+    if (e.type === "mousedown" && e.button !== 0) {
       return;
     }
     e.preventDefault();
-    const {row, column} = eventToCellLocation(e);
+    const { row, column } = eventToCellLocation(e);
     const model = this.props.model.clone();
     model.startSelection(row, column);
     if (!this.props.model.equals(model)) {
@@ -139,7 +140,7 @@ export default class extends React.PureComponent {
 
   handleTouchMoveCell(e) {
     e.preventDefault();
-    const {row, column} = eventToCellLocation(e);
+    const { row, column } = eventToCellLocation(e);
     const model = this.props.model.clone();
     model.updateSelection(row, column);
     if (!this.props.model.equals(model)) {
