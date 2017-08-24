@@ -6,7 +6,7 @@
 
   - Ultra fast
   - Good for user inputted timetables
-  - Less than 5kB when gzipped
+  - Less than 4kB when gzipped
 
 ## Installation
 
