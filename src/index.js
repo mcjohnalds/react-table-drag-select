@@ -50,28 +50,24 @@ export default class extends React.PureComponent {
   //   - Adds event listeners to children.
   //   - Sets disabled, beingSelected, and selected props on children based on
   //     this.props and this.props.
-  modifyChildren = () => {
-    return React.Children.map(this.props.children, (tr, i) => {
-      const cells = React.Children.map(tr.props.children, (cell, j) => {
-        return (
-          <Cell
-            onTouchStart={this.handleTouchStartCell}
-            onTouchMove={this.handleTouchMoveCell}
-            selected={this.props.model.getCellsSelected()[i][j]}
-            beingSelected={this.props.model.getCellsBeingSelected()[i][j]}
-            {...cell.props}
-          >
-            {cell.props.children}
-          </Cell>
-        );
-      });
+  modifyChildren = () =>
+    React.Children.map(this.props.children, (tr, i) => {
       return (
         <tr {...tr.props}>
-          {cells}
+          {React.Children.map(tr.props.children, (cell, j) =>
+            <Cell
+              onTouchStart={this.handleTouchStartCell}
+              onTouchMove={this.handleTouchMoveCell}
+              selected={this.props.model.getCellsSelected()[i][j]}
+              beingSelected={this.props.model.getCellsBeingSelected()[i][j]}
+              {...cell.props}
+            >
+              {cell.props.children}
+            </Cell>
+          )}
         </tr>
       );
     });
-  };
 
   // Throws an error if the structure of this.props.children is wrong
   validateChildren = () => {
