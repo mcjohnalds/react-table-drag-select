@@ -3,7 +3,7 @@
 //
 // > this._getCellLocationFromEvent({...})
 // {row: 2, column: 3}
-function eventToCellLocation(e) {
+const eventToCellLocation = e => {
   let target;
   // For touchmove and touchend events, e.target and e.touches[n].target are
   // wrong, so we have to rely on elementFromPoint(). For mouse clicks, we have
@@ -18,14 +18,14 @@ function eventToCellLocation(e) {
     }
   }
   return getCellLocation(target);
-}
+};
 
 // Take a <td> and return its row and column
-function getCellLocation(tdElement) {
+const getCellLocation = tdElement => {
   return {
     row: tdElement.parentNode.rowIndex,
     column: tdElement.cellIndex
   };
-}
+};
 
 export default eventToCellLocation;

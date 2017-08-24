@@ -5,6 +5,7 @@ import Cell from "./Cell";
 import eventToCellLocation from "./eventToCellLocation";
 
 export default class extends React.PureComponent {
+  // We are effectively re-exporting Model
   static Model = Model;
 
   constructor(props) {
@@ -19,22 +20,19 @@ export default class extends React.PureComponent {
     ) {
       throw Error("onModelChange must be a function");
     }
-    this.handleTouchEndWindow = this.handleTouchEndWindow.bind(this);
-    this.handleTouchStartCell = this.handleTouchStartCell.bind(this);
-    this.handleTouchMoveCell = this.handleTouchMoveCell.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     window.addEventListener("mouseup", this.handleTouchEndWindow);
     window.addEventListener("touchend", this.handleTouchEndWindow);
-  }
+  };
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     window.removeEventListener("mouseup", this.handleTouchEndWindow);
     window.removeEventListener("touchend", this.handleTouchEndWindow);
-  }
+  };
 
-  render() {
+  render = () => {
     const { model, onModelChange, ...props } = this.props;
     return (
       <div className="table-drag-select">
@@ -45,14 +43,14 @@ export default class extends React.PureComponent {
         </table>
       </div>
     );
-  }
+  };
 
   // Creates children elements based on the user inputed this.props.children.
   //
   //   - Adds event listeners to children.
   //   - Sets disabled, beingSelected, and selected props on children based on
   //     this.props and this.props.
-  modifyChildren() {
+  modifyChildren = () => {
     return React.Children.map(this.props.children, (tr, i) => {
       const cells = React.Children.map(tr.props.children, (cell, j) => {
         return (
@@ -73,10 +71,10 @@ export default class extends React.PureComponent {
         </tr>
       );
     });
-  }
+  };
 
   // Throws an error if the structure of this.props.children is wrong
-  validateChildren() {
+  validateChildren = () => {
     const { rows, columns } = this.getChildrenDimensions();
     if (React.Children.count(this.props.children) !== rows) {
       throw new TypeError(
@@ -101,10 +99,10 @@ export default class extends React.PureComponent {
         }
       }
     }
-  }
+  };
 
   // Returns the number of rows and columns of this.props.children
-  getChildrenDimensions() {
+  getChildrenDimensions = () => {
     const rows = React.Children.count(this.props.children);
     if (rows === 0) {
       return { rows: 0, columns: 0 };
@@ -112,9 +110,9 @@ export default class extends React.PureComponent {
     const firstRow = this.props.children[0];
     const columns = React.Children.count(firstRow.props.children);
     return { rows, columns };
-  }
+  };
 
-  handleTouchEndWindow(e) {
+  handleTouchEndWindow = e => {
     if (e.type === "mouseup" && e.button !== 0) {
       return;
     }
@@ -123,9 +121,9 @@ export default class extends React.PureComponent {
     if (!this.props.model.equals(model)) {
       this.props.onModelChange(model);
     }
-  }
+  };
 
-  handleTouchStartCell(e) {
+  handleTouchStartCell = e => {
     if (e.type === "mousedown" && e.button !== 0) {
       return;
     }
@@ -136,9 +134,9 @@ export default class extends React.PureComponent {
     if (!this.props.model.equals(model)) {
       this.props.onModelChange(model);
     }
-  }
+  };
 
-  handleTouchMoveCell(e) {
+  handleTouchMoveCell = e => {
     e.preventDefault();
     const { row, column } = eventToCellLocation(e);
     const model = this.props.model.clone();
@@ -146,5 +144,5 @@ export default class extends React.PureComponent {
     if (!this.props.model.equals(model)) {
       this.props.onModelChange(model);
     }
-  }
+  };
 }

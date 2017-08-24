@@ -1,22 +1,16 @@
 import React from "react";
 
 export default class extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleTouchStart = this.handleTouchStart.bind(this);
-    this.handleTouchMove = this.handleTouchMove.bind(this);
-  }
-
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate = nextProps => {
     // This optimization gave a 10% performance boost while drag-selecting
     // cells
     return (
       this.props.beingSelected !== nextProps.beingSelected ||
       this.props.selected !== nextProps.selected
     );
-  }
+  };
 
-  componentDidMount() {
+  componentDidMount = () => {
     // We need to call addEventListener ourselves so that we can pass
     // {passive: false}
     this.td.addEventListener("touchstart", this.handleTouchStart, {
@@ -25,14 +19,14 @@ export default class extends React.Component {
     this.td.addEventListener("touchmove", this.handleTouchMove, {
       passive: false
     });
-  }
+  };
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     this.td.removeEventListener("touchstart", this.handleTouchStart);
     this.td.removeEventListener("touchmove", this.handleTouchMove);
-  }
+  };
 
-  render() {
+  render = () => {
     let {
       className,
       disabled,
@@ -64,17 +58,17 @@ export default class extends React.Component {
         {this.props.children}&nbsp;
       </td>
     );
-  }
+  };
 
-  handleTouchStart(e) {
+  handleTouchStart = e => {
     if (!this.props.disabled) {
       this.props.onTouchStart(e);
     }
-  }
+  };
 
-  handleTouchMove(e) {
+  handleTouchMove = e => {
     if (!this.props.disabled) {
       this.props.onTouchMove(e);
     }
-  }
+  };
 }

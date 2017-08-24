@@ -11,13 +11,13 @@ export default class {
     this._resetSelectedCells();
   }
 
-  getRowCount() {
+  getRowCount = () => {
     return this._rows;
-  }
+  };
 
-  getColumnCount() {
+  getColumnCount = () => {
     return this._columns;
-  }
+  };
 
   // Returns an array indication which cells have been selected. For example
   // the return value
@@ -26,9 +26,9 @@ export default class {
   //     [false, false, true] ]
   //
   // Indicates the last column is selected.
-  getCellsSelected() {
+  getCellsSelected = () => {
     return this._cellsSelected;
-  }
+  };
 
   // Returns an array indication which cells are being selected. For example
   // the return value
@@ -37,7 +37,7 @@ export default class {
   //     [false, false, true] ]
   //
   // Indicates the last column is being selected.
-  getCellsBeingSelected() {
+  getCellsBeingSelected = () => {
     const cells = [];
     for (let i = 0; i < this._rows; i++) {
       cells.push([]);
@@ -46,11 +46,11 @@ export default class {
       }
     }
     return cells;
-  }
+  };
 
   // Start a selection at a location. Does nothing if we are already selecting
   // cells.
-  startSelection(row, column) {
+  startSelection = (row, column) => {
     if (this._selectionStarted) {
       return;
     }
@@ -60,20 +60,20 @@ export default class {
     this._endRow = row;
     this._endColumn = column;
     this._addMode = !this._cellsSelected[row][column];
-  }
+  };
 
   // Update a selection. Does nothing if we aren't selected cells.
-  updateSelection(row, column) {
+  updateSelection = (row, column) => {
     if (!this._selectionStarted) {
       return;
     }
     this._endRow = row;
     this._endColumn = column;
-  }
+  };
 
   // Finish a selection at a location, marking cells under current selection as
   // selected. Does nothing when we aren't selecting cells.
-  finishSelection() {
+  finishSelection = () => {
     if (!this._selectionStarted) {
       return;
     }
@@ -84,26 +84,26 @@ export default class {
       }
     }
     this._resetSelectionMembers();
-  }
+  };
 
   // Deselect all cells and stop any current active selection
-  clear() {
+  clear = () => {
     this._resetSelectionMembers();
     this._resetSelectedCells();
-  }
+  };
 
   // Returns true iff this is the same as model
-  equals(model) {
+  equals = model => {
     return equal(this, model);
-  }
+  };
 
   // Return a clone of this
-  clone() {
+  clone = () => {
     return clone(this);
-  }
+  };
 
   // Is the cell at the given location currently under an selection?
-  _isCellBeingSelected(row, column) {
+  _isCellBeingSelected = (row, column) => {
     if (!this._selectionStarted) {
       return false;
     }
@@ -115,20 +115,20 @@ export default class {
       column >= rect.minColumn &&
       column <= rect.maxColumn
     );
-  }
+  };
 
   // Return corners of an axis-aligned bounding box
-  _getSelectionRectangle() {
+  _getSelectionRectangle = () => {
     return {
       minRow: Math.min(this._startRow, this._endRow),
       maxRow: Math.max(this._startRow, this._endRow),
       minColumn: Math.min(this._startColumn, this._endColumn),
       maxColumn: Math.max(this._startColumn, this._endColumn)
     };
-  }
+  };
 
   // Set members that handle the current state selection to their defaults
-  _resetSelectionMembers() {
+  _resetSelectionMembers = () => {
     // True when box select mode is active
     this._selectionStarted = false;
     // Where user began their selection box from
@@ -141,10 +141,10 @@ export default class {
     // toy begin a selection from an already selected cell,
     // addMode = false.
     this._addMode = null;
-  }
+  };
 
   // Set this._cellsSelected to default
-  _resetSelectedCells() {
+  _resetSelectedCells = () => {
     this._cellsSelected = [];
     for (let i = 0; i < this._rows; i++) {
       this._cellsSelected.push([]);
@@ -152,5 +152,5 @@ export default class {
         this._cellsSelected[i][j] = false;
       }
     }
-  }
+  };
 }
