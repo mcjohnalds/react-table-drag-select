@@ -32,7 +32,7 @@
     "precommit": "lint-staged && NODE_ENV=production npm run build-all"
   },
   "lint-staged": {
-    "*.js": ["prettier --write", "git add"],
+    "*.js": ["prettier --write", "git add", "git add docs"],
     "*.json": ["prettier --parser json --write", "git add"]
   },
   "dependencies": {
