@@ -1,7 +1,7 @@
 import clone from "clone";
 import equal from "deep-is";
 
-// The 'model' part of the model-view pattern
+// State and logic container
 export default class {
   // Create a Model for the TableDragSelect with a number of rows and columns
   constructor(rows, columns) {
