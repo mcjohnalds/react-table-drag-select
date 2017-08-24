@@ -231,8 +231,3 @@ This isn't required, but changing the colors can really spruce things up.
   width: 3rem;
 }
 ```
-
-## Contributing
-
-[Open an issue on github](https://github.com/mcjohnalds/react-table-drag-select/issues/new)
-or submit a pull request (remember to run `npm test` first!)
