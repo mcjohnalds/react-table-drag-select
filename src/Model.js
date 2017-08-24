@@ -30,6 +30,19 @@ export default class {
     return this._cellsSelected;
   };
 
+  // Set the selected cells. For example
+  //
+  //   model.setCellsSelected([
+  //     [false, false, true],
+  //     [false, false, true]
+  //   ]);
+  //
+  // Sets only the last column to be selected.
+  setCellsSelected = cells => {
+    this.clear();
+    this._cellsSelected = clone(cells);
+  };
+
   // Returns an array indication which cells are being selected. For example
   // the return value
   //

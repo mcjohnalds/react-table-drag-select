@@ -25,6 +25,20 @@ describe('Model', function() {
     });
   });
 
+  describe('setCellsSelected(cells)', function() {
+    it("should set the selected cells", function() {
+      const m = new Model(2, 3);
+      m.setCellsSelected([
+        [false, false, true],
+        [false, false, true],
+      ]);
+      expect(m.getCellsSelected()).to.deep.equal([
+        [false, false, true],
+        [false, false, true]
+      ]);
+    });
+  });
+
   describe('getCellsBeingSelected()', function() {
     it('should work when no cells being selected', function() {
       const m = new Model(2, 3);
