@@ -21,11 +21,9 @@ const eventToCellLocation = e => {
 };
 
 // Take a <td> and return its row and column
-const getCellLocation = tdElement => {
-  return {
-    row: tdElement.parentNode.rowIndex,
-    column: tdElement.cellIndex
-  };
-};
+const getCellLocation = tdElement => ({
+  row: tdElement.parentNode.rowIndex,
+  column: tdElement.cellIndex
+});
 
 export default eventToCellLocation;

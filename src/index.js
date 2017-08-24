@@ -87,7 +87,7 @@ export default class extends React.PureComponent {
           "A <TableDragSelect> must only contain <tr> children"
         );
       }
-      let childColumns = React.Children.count(tr.props.children);
+      const childColumns = React.Children.count(tr.props.children);
       if (childColumns !== this.props.model.getColumnCount()) {
         throw new TypeError(
           "Mismatch between model column count and children column count"

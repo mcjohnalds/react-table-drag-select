@@ -1,14 +1,11 @@
 import React from "react";
 
 export default class extends React.Component {
-  shouldComponentUpdate = nextProps => {
-    // This optimization gave a 10% performance boost while drag-selecting
-    // cells
-    return (
-      this.props.beingSelected !== nextProps.beingSelected ||
-      this.props.selected !== nextProps.selected
-    );
-  };
+  // This optimization gave a 10% performance boost while drag-selecting
+  // cells
+  shouldComponentUpdate = nextProps =>
+    this.props.beingSelected !== nextProps.beingSelected ||
+    this.props.selected !== nextProps.selected;
 
   componentDidMount = () => {
     // We need to call addEventListener ourselves so that we can pass

@@ -11,13 +11,9 @@ export default class {
     this._resetSelectedCells();
   }
 
-  getRowCount = () => {
-    return this._rows;
-  };
+  getRowCount = () => this._rows;
 
-  getColumnCount = () => {
-    return this._columns;
-  };
+  getColumnCount = () => this._columns;
 
   // Returns an array indication which cells have been selected. For example
   // the return value
@@ -26,9 +22,7 @@ export default class {
   //     [false, false, true] ]
   //
   // Indicates the last column is selected.
-  getCellsSelected = () => {
-    return this._cellsSelected;
-  };
+  getCellsSelected = () => this._cellsSelected;
 
   // Set the selected cells. For example
   //
@@ -118,9 +112,7 @@ export default class {
     equal(this._cellsSelected, model._cellsSelected);
 
   // Return a clone of this
-  clone = () => {
-    return clone(this);
-  };
+  clone = () => clone(this);
 
   // Is the cell at the given location currently under an selection?
   _isCellBeingSelected = (row, column) => {
@@ -138,14 +130,12 @@ export default class {
   };
 
   // Return corners of an axis-aligned bounding box
-  _getSelectionRectangle = () => {
-    return {
-      minRow: Math.min(this._startRow, this._endRow),
-      maxRow: Math.max(this._startRow, this._endRow),
-      minColumn: Math.min(this._startColumn, this._endColumn),
-      maxColumn: Math.max(this._startColumn, this._endColumn)
-    };
-  };
+  _getSelectionRectangle = () => ({
+    minRow: Math.min(this._startRow, this._endRow),
+    maxRow: Math.max(this._startRow, this._endRow),
+    minColumn: Math.min(this._startColumn, this._endColumn),
+    maxColumn: Math.max(this._startColumn, this._endColumn)
+  });
 
   // Set members that handle the current state selection to their defaults
   _resetSelectionMembers = () => {
