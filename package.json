@@ -24,7 +24,7 @@
   "main": "lib",
   "repository": "mcjohnalds/react-table-drag-select",
   "scripts": {
-    "build-js": "babel -s true -d lib src",
+    "build-js": "rm -rf lib && babel -s true -d lib src",
     "build-docs": "webpack",
     "build-all": "npm run build-js && npm run build-docs",
     "test": "npm run build-js && mocha --compilers js:babel-core/register",
