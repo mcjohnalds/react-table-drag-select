@@ -29,10 +29,10 @@
     "build-all": "npm run build-js && npm run build-docs",
     "test": "npm run build-js && mocha --compilers js:babel-core/register",
     "start": "webpack-dev-server",
-    "precommit": "lint-staged && NODE_ENV=production npm run build-all"
+    "precommit": "lint-staged && NODE_ENV=production npm run build-all && git add docs/bundle.js"
   },
   "lint-staged": {
-    "*.js": ["prettier --write", "git add", "git add docs"],
+    "src/*.js": ["prettier --write", "git add"],
     "*.json": ["prettier --parser json --write", "git add"]
   },
   "dependencies": {
