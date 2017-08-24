@@ -106,9 +106,16 @@ export default class {
   };
 
   // Returns true iff this is the same as model
-  equals = model => {
-    return equal(this, model);
-  };
+  equals = model =>
+    equal(this._rows, model._rows) &&
+    equal(this._columns, model._columns) &&
+    equal(this._selectionStarted, model._selectionStarted) &&
+    equal(this._startRow, model._startRow) &&
+    equal(this._startColumn, model._startColumn) &&
+    equal(this._endRow, model._endRow) &&
+    equal(this._endColumn, model._endColumn) &&
+    equal(this._addMode, model._addMode) &&
+    equal(this._cellsSelected, model._cellsSelected);
 
   // Return a clone of this
   clone = () => {
