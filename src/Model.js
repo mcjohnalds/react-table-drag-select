@@ -37,8 +37,8 @@ export default class {
     this._cellsSelected = clone(cells);
   };
 
-  // Returns an array indication which cells are being selected. For example
-  // the return value
+  // Returns an array of the cells which are being selected. For example the
+  // return value
   //
   //   [ [false, false, true],
   //     [false, false, true] ]
@@ -69,7 +69,7 @@ export default class {
     this._addMode = !this._cellsSelected[row][column];
   };
 
-  // Update a selection. Does nothing if we aren't selected cells.
+  // Update a selection. Does nothing if we aren't selecting cells.
   updateSelection = (row, column) => {
     if (!this._selectionStarted) {
       return;
@@ -129,7 +129,7 @@ export default class {
     );
   };
 
-  // Return corners of an axis-aligned bounding box
+  // Return the selection rectangle
   _getSelectionRectangle = () => ({
     minRow: Math.min(this._startRow, this._endRow),
     maxRow: Math.max(this._startRow, this._endRow),
@@ -153,7 +153,7 @@ export default class {
     this._addMode = null;
   };
 
-  // Set this._cellsSelected to default
+  // Set all cells to an unselected state
   _resetSelectedCells = () => {
     this._cellsSelected = [];
     for (let i = 0; i < this._rows; i++) {
