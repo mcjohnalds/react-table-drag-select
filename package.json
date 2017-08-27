@@ -20,7 +20,7 @@
     "email": "johnowen357@gmail.com",
     "url": "https://github.com/mcjohnalds"
   },
-  "files": ["lib/index.js", "style.css"],
+  "files": ["lib", "style.css"],
   "main": "lib",
   "repository": "mcjohnalds/react-table-drag-select",
   "scripts": {
