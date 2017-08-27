@@ -32,7 +32,7 @@ class App extends React.Component {
       [false, false, false, false, false, false],
       [false, false, false, false, false, false],
       [false, false, false, false, false, false],
-      [false, false, false, false, false, false],
+      [false, false, false, false, false, false]
     ]
   };
 
@@ -41,13 +41,62 @@ class App extends React.Component {
       value={this.state.cells}
       onChange={cells => this.setState({ cells })}
     >
-      <tr><td /><td /><td /><td /><td /><td /></tr>
-      <tr><td /><td /><td /><td /><td /><td /></tr>
-      <tr><td /><td /><td /><td /><td /><td /></tr>
-      <tr><td /><td /><td /><td /><td /><td /></tr>
-      <tr><td /><td /><td /><td /><td /><td /></tr>
-      <tr><td /><td /><td /><td /><td /><td /></tr>
-      <tr><td /><td /><td /><td /><td /><td /></tr>
+      <tr>
+        <td />
+        <td />
+        <td />
+        <td />
+        <td />
+        <td />
+      </tr>
+      <tr>
+        <td />
+        <td />
+        <td />
+        <td />
+        <td />
+        <td />
+      </tr>
+      <tr>
+        <td />
+        <td />
+        <td />
+        <td />
+        <td />
+        <td />
+      </tr>
+      <tr>
+        <td />
+        <td />
+        <td />
+        <td />
+        <td />
+        <td />
+      </tr>
+      <tr>
+        <td />
+        <td />
+        <td />
+        <td />
+        <td />
+        <td />
+      </tr>
+      <tr>
+        <td />
+        <td />
+        <td />
+        <td />
+        <td />
+        <td />
+      </tr>
+      <tr>
+        <td />
+        <td />
+        <td />
+        <td />
+        <td />
+        <td />
+      </tr>
     </TableDragSelect>;
 }
 ```
