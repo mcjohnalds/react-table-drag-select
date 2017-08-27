@@ -230,7 +230,7 @@ class Cell extends React.Component {
         onMouseMove={this.handleTouchMove}
         {...props}
       >
-        {this.props.children || " "}
+        {this.props.children || <span>&nbsp;</span>}
       </td>
     );
   };
