@@ -225,7 +225,7 @@ class Cell extends React.Component {
 
   render = () => {
     let {
-      className,
+      className = "",
       disabled,
       beingSelected,
       selected,
