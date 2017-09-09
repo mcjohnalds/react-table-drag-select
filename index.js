@@ -1,5 +1,4 @@
 import React from "react";
-import equal from "deep-is";
 import clone from "clone";
 import PropTypes from "prop-types";
 
