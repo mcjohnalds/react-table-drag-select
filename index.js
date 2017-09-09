@@ -135,13 +135,13 @@ export default class TableDragSelect extends React.Component {
     if (this.state.selectionStarted) {
       e.preventDefault();
       const { row, column } = eventToCellLocation(e);
-      //      const rowCount = Math.abs(row - this.state.startRow)
-      //      if (rowCount <= this.props.maxRows) {
-      this.setState({
-        endRow: row,
-        endColumn: column
-      });
-      //      }
+
+      if (this.state.endRow !== row || this.state.endColumn !== column) {
+        this.setState({
+          endRow: row,
+          endColumn: column
+        });
+      }
     }
   };
 
@@ -168,6 +168,20 @@ export default class TableDragSelect extends React.Component {
       this.setState({ selectionStarted: false });
       this.props.onChange(value);
     }
+  };
+
+  selectedRowCount = () => {
+    const { startRow, endRow } = this.state;
+    return startRow === null && endRow === null
+      ? 0
+      : Math.abs(endRow - startRow) + 1;
+  };
+
+  selectedColumnCount = () => {
+    const { startColumn, endColumn } = this.state;
+    return startColumn === null && endColumn === null
+      ? 0
+      : Math.abs(endColumn - startColumn) + 1;
   };
 
   isCellBeingSelected = (row, column) => {
