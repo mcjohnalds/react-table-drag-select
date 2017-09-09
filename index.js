@@ -28,6 +28,7 @@ export default class TableDragSelect extends React.Component {
       }
     },
     maxRows: PropTypes.number,
+    maxColumns: PropTypes.number,
     onSelectionStart: PropTypes.func,
     onInput: PropTypes.func,
     onChange: PropTypes.func,
@@ -61,6 +62,7 @@ export default class TableDragSelect extends React.Component {
   static defaultProps = {
     value: [],
     maxRows: Infinity,
+    maxColumns: Infinity,
     onSelectionStart: () => {},
     onInput: () => {},
     onChange: () => {}
@@ -135,12 +137,25 @@ export default class TableDragSelect extends React.Component {
     if (this.state.selectionStarted) {
       e.preventDefault();
       const { row, column } = eventToCellLocation(e);
+      const { startRow, startColumn, endRow, endColumn } = this.state;
 
-      if (this.state.endRow !== row || this.state.endColumn !== column) {
-        this.setState({
-          endRow: row,
-          endColumn: column
-        });
+      if (endRow !== row || endColumn !== column) {
+        const nextRowCount =
+          startRow === null && endRow === null
+            ? 0
+            : Math.abs(row - startRow) + 1;
+        const nextColumnCount =
+          startColumn === null && endColumn === null
+            ? 0
+            : Math.abs(column - startColumn) + 1;
+
+        if (nextRowCount <= this.props.maxRows) {
+          this.setState({ endRow: row });
+        }
+
+        if (nextColumnCount <= this.props.maxColumns) {
+          this.setState({ endColumn: column });
+        }
       }
     }
   };
@@ -168,20 +183,6 @@ export default class TableDragSelect extends React.Component {
       this.setState({ selectionStarted: false });
       this.props.onChange(value);
     }
-  };
-
-  selectedRowCount = () => {
-    const { startRow, endRow } = this.state;
-    return startRow === null && endRow === null
-      ? 0
-      : Math.abs(endRow - startRow) + 1;
-  };
-
-  selectedColumnCount = () => {
-    const { startColumn, endColumn } = this.state;
-    return startColumn === null && endColumn === null
-      ? 0
-      : Math.abs(endColumn - startColumn) + 1;
   };
 
   isCellBeingSelected = (row, column) => {

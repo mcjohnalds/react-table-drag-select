@@ -255,7 +255,8 @@ class App extends React.Component {
       <div className="table-container">
         <TableDragSelect
           value={this.state.cells}
-          maxRow={3}
+          maxRows={3}
+          maxColumns={3}
           onChange={this.handleChange}
           onSelectionStart={event => console.log("start", event)}
           onInput={event => console.log("event", event)}
