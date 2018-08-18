@@ -1,5 +1,4 @@
 import React from "react";
-import equal from "deep-is";
 import clone from "clone";
 import PropTypes from "prop-types";
 
@@ -27,6 +26,10 @@ export default class TableDragSelect extends React.Component {
         }
       }
     },
+    maxRows: PropTypes.number,
+    maxColumns: PropTypes.number,
+    onSelectionStart: PropTypes.func,
+    onInput: PropTypes.func,
     onChange: PropTypes.func,
     children: props => {
       if (TableDragSelect.propTypes.value(props)) {
@@ -57,6 +60,10 @@ export default class TableDragSelect extends React.Component {
 
   static defaultProps = {
     value: [],
+    maxRows: Infinity,
+    maxColumns: Infinity,
+    onSelectionStart: () => {},
+    onInput: () => {},
     onChange: () => {}
   };
 
@@ -80,12 +87,9 @@ export default class TableDragSelect extends React.Component {
   };
 
   render = () => {
-    const { value, onChange, ...props } = this.props;
     return (
-      <table className="table-drag-select" {...props}>
-        <tbody>
-          {this.renderRows()}
-        </tbody>
+      <table className="table-drag-select">
+        <tbody>{this.renderRows()}</tbody>
       </table>
     );
   };
@@ -94,7 +98,7 @@ export default class TableDragSelect extends React.Component {
     React.Children.map(this.props.children, (tr, i) => {
       return (
         <tr key={i} {...tr.props}>
-          {React.Children.map(tr.props.children, (cell, j) =>
+          {React.Children.map(tr.props.children, (cell, j) => (
             <Cell
               key={j}
               onTouchStart={this.handleTouchStartCell}
@@ -105,7 +109,7 @@ export default class TableDragSelect extends React.Component {
             >
               {cell.props.children}
             </Cell>
-          )}
+          ))}
         </tr>
       );
     });
@@ -116,6 +120,7 @@ export default class TableDragSelect extends React.Component {
     if (!this.state.selectionStarted && (isLeftClick || isTouch)) {
       e.preventDefault();
       const { row, column } = eventToCellLocation(e);
+      this.props.onSelectionStart({ row, column });
       this.setState({
         selectionStarted: true,
         startRow: row,
@@ -131,10 +136,26 @@ export default class TableDragSelect extends React.Component {
     if (this.state.selectionStarted) {
       e.preventDefault();
       const { row, column } = eventToCellLocation(e);
-      this.setState({
-        endRow: row,
-        endColumn: column
-      });
+      const { startRow, startColumn, endRow, endColumn } = this.state;
+
+      if (endRow !== row || endColumn !== column) {
+        const nextRowCount =
+          startRow === null && endRow === null
+            ? 0
+            : Math.abs(row - startRow) + 1;
+        const nextColumnCount =
+          startColumn === null && endColumn === null
+            ? 0
+            : Math.abs(column - startColumn) + 1;
+
+        if (nextRowCount <= this.props.maxRows) {
+          this.setState({ endRow: row });
+        }
+
+        if (nextColumnCount <= this.props.maxColumns) {
+          this.setState({ endColumn: column });
+        }
+      }
     }
   };
 
@@ -168,6 +189,7 @@ export default class TableDragSelect extends React.Component {
     const maxRow = Math.max(this.state.startRow, this.state.endRow);
     const minColumn = Math.min(this.state.startColumn, this.state.endColumn);
     const maxColumn = Math.max(this.state.startColumn, this.state.endColumn);
+
     return (
       this.state.selectionStarted &&
       (row >= minRow &&
@@ -203,7 +225,7 @@ class Cell extends React.Component {
 
   render = () => {
     let {
-      className,
+      className = "",
       disabled,
       beingSelected,
       selected,

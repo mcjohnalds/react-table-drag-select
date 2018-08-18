@@ -243,7 +243,7 @@ class App extends React.Component {
     ]
   };
 
-  render = () =>
+  render = () => (
     <div>
       <h1>
         <a href="https://github.com/mcjohnalds/react-table-drag-select">
@@ -253,7 +253,14 @@ class App extends React.Component {
       </h1>
       <h2>Timetable</h2>
       <div className="table-container">
-        <TableDragSelect value={this.state.cells} onChange={this.handleChange}>
+        <TableDragSelect
+          value={this.state.cells}
+          maxRows={3}
+          maxColumns={3}
+          onChange={this.handleChange}
+          onSelectionStart={event => console.log("start", event)}
+          onInput={event => console.log("event", event)}
+        >
           <tr>
             <td disabled />
             <td disabled>Monday</td>
@@ -332,26 +339,19 @@ class App extends React.Component {
       <h2>
         <code>{"onChange={cells => ...}"}</code> callback
       </h2>
-      <pre ref="output">
-        cells = {stringifyBoolMatrix(this.state.cells)}
-      </pre>
+      <pre ref="output">cells = {stringifyBoolMatrix(this.state.cells)}</pre>
       <h2>Javascript</h2>
-      <pre>
-        {jsCode}
-      </pre>
+      <pre>{jsCode}</pre>
       <h2>Optional styling</h2>
       <p>
         This isn't required, but changing the colors can really spruce things
         up.
       </p>
-      <pre>
-        {cssCode}
-      </pre>
+      <pre>{cssCode}</pre>
       <h2>Resulting DOM</h2>
-      <pre>
-        {resultingDOM}
-      </pre>
-    </div>;
+      <pre>{resultingDOM}</pre>
+    </div>
+  );
 
   handleChange = cells => {
     if (!equal(this.state.cells, cells)) {
