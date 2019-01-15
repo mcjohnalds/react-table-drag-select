@@ -36,7 +36,7 @@ export default class TableDragSelect extends React.Component {
         return; // Let error be handled elsewhere
       }
       const error = new Error(
-        "Invalid prop `children` supplied to `TableDragSelect`. Validation failed."
+        "Invalid prop `children` supplied to `TableDragSelect`. Validation failed.\n[Hint] Ensure the number of elements of the array passed to the `value` prop is equivalent to the number of cells passed as children."
       );
       const trs = React.Children.toArray(props.children);
       const rowCount = props.value.length;
