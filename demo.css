@@ -35,6 +35,15 @@ button {
   padding: 0.3rem 0.5rem;
 }
 
+.int-demo {
+  margin-bottom: 0.5rem;
+}
+
+.int-demo button {
+  float: none;
+  margin-left: 0.5rem;
+}
+
 .flash {
   animation-name: flash;
   animation-duration: 0.5s;
@@ -62,6 +71,15 @@ button {
 
 .table-drag-select td.cell-selected {
   background-color: #FBD5D4;
+}
+.table-drag-select td.foo {
+  background-color: #FF0000;
+}
+.table-drag-select td.bar {
+  background-color: #00FF00;
+}
+.table-drag-select td.baz {
+  background-color: #0000ff;
 }
 
 .table-drag-select td.cell-being-selected {

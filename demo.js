@@ -240,10 +240,21 @@ class App extends React.Component {
       [false, false, false, false, false, false, false],
       [false, false, false, false, false, false, false],
       [false, false, false, false, false, false, false]
-    ]
+    ],
+    intCells: [
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0]
+    ],
+    setValue: 0
   };
 
-  render = () => (
+  render = () =>
     <div>
       <h1>
         <a href="https://github.com/mcjohnalds/react-table-drag-select">
@@ -334,24 +345,126 @@ class App extends React.Component {
             <td>overtime</td>
           </tr>
         </TableDragSelect>
+        <h2>
+          <code>{"onChange={cells => ...}"}</code> callback
+        </h2>
+        <pre ref="output">
+          cells = {stringifyBoolMatrix(this.state.cells)}
+        </pre>
+        <button onClick={this.handleReset}>Reset</button>
+        <h3>Int value mode</h3>
+        <div className="int-demo">
+          <strong>Current `setValue`:</strong> {this.state.setValue}
+          <button onClick={this.updateSetValue}>Rotate value</button>
+        </div>
+        <TableDragSelect
+          value={this.state.intCells}
+          onChange={this.handleIntChange}
+          setValue={this.state.setValue}
+          classNameMap={{
+            0: "",
+            1: "foo",
+            2: "bar",
+            3: "baz"
+          }}
+        >
+          <tr>
+            <td disabled />
+            <td disabled>Monday</td>
+            <td disabled>Tuesday</td>
+            <td disabled>Wednesday</td>
+            <td disabled>Thursday</td>
+            <td disabled>Friday</td>
+            <td disabled>Saturday</td>
+          </tr>
+          <tr>
+            <td disabled>10:00</td>
+            <td />
+            <td />
+            <td />
+            <td />
+            <td />
+            <td>overtime</td>
+          </tr>
+          <tr>
+            <td disabled>11:00</td>
+            <td />
+            <td />
+            <td />
+            <td />
+            <td />
+            <td>overtime</td>
+          </tr>
+          <tr>
+            <td disabled>12:00</td>
+            <td />
+            <td />
+            <td />
+            <td />
+            <td />
+            <td>overtime</td>
+          </tr>
+          <tr>
+            <td disabled>13:00</td>
+            <td />
+            <td />
+            <td />
+            <td />
+            <td />
+            <td>overtime</td>
+          </tr>
+          <tr>
+            <td disabled>14:00</td>
+            <td />
+            <td />
+            <td />
+            <td />
+            <td />
+            <td>overtime</td>
+          </tr>
+          <tr>
+            <td disabled>15:00</td>
+            <td />
+            <td />
+            <td />
+            <td />
+            <td />
+            <td>overtime</td>
+          </tr>
+          <tr>
+            <td disabled>16:00</td>
+            <td />
+            <td />
+            <td />
+            <td />
+            <td />
+            <td>overtime</td>
+          </tr>
+        </TableDragSelect>
       </div>
-      <button onClick={this.handleReset}>Reset</button>
       <h2>
         <code>{"onChange={cells => ...}"}</code> callback
       </h2>
-      <pre ref="output">cells = {stringifyBoolMatrix(this.state.cells)}</pre>
+      <pre ref="output">
+        intCells = {stringifyIntMatrix(this.state.intCells)}
+      </pre>
       <h2>Javascript</h2>
-      <pre>{jsCode}</pre>
+      <pre>
+        {jsCode}
+      </pre>
       <h2>Optional styling</h2>
       <p>
         This isn't required, but changing the colors can really spruce things
         up.
       </p>
-      <pre>{cssCode}</pre>
+      <pre>
+        {cssCode}
+      </pre>
       <h2>Resulting DOM</h2>
-      <pre>{resultingDOM}</pre>
-    </div>
-  );
+      <pre>
+        {resultingDOM}
+      </pre>
+    </div>;
 
   handleChange = cells => {
     if (!equal(this.state.cells, cells)) {
@@ -359,6 +472,10 @@ class App extends React.Component {
       this.setState({ cells });
     }
   };
+
+  handleIntChange = intCells => this.setState({ intCells });
+  updateSetValue = () =>
+    this.setState(state => ({ setValue: (state.setValue + 1) % 4 }));
 
   handleReset = () => {
     const cells = [
@@ -389,8 +506,16 @@ const stringifyBoolMatrix = matrix => {
     return row.map(cell => (cell ? " true" : "false")).join(", ");
   };
 
-  return "[\n  [" + matrix.map(row2Str).join("],\n  [") + "]\n]";
+  return prettyPrintMatrix(matrix, row2Str);
 };
+
+const stringifyIntMatrix = matrix => {
+  const row2Str = row => row.join(", ");
+  return prettyPrintMatrix(matrix, row2Str);
+};
+
+const prettyPrintMatrix = (matrix, rowFn) =>
+  "[\n  [" + matrix.map(rowFn).join("],\n  [") + "]\n]";
 
 const div = document.createElement("div");
 document.body.appendChild(div);

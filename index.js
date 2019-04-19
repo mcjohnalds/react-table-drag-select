@@ -15,11 +15,19 @@ export default class TableDragSelect extends React.Component {
         return;
       }
       const columnCount = props.value[0].length;
+      const hasClassNameMap = props.classNameMap !== undefined;
       for (const row of props.value) {
         if (!Array.isArray(row) || row.length !== columnCount) {
           return error;
         }
         for (const cell of row) {
+          if (hasClassNameMap) {
+            if (props.classNameMap[cell] === undefined) {
+              return error;
+            } else {
+              return;
+            }
+          }
           if (typeof cell !== "boolean") {
             return error;
           }
@@ -27,6 +35,22 @@ export default class TableDragSelect extends React.Component {
       }
     },
     classNameMap: PropTypes.objectOf(PropTypes.string),
+    setValue: props => {
+      const hasClassNameMap = props.classNameMap !== undefined;
+      if (hasClassNameMap) {
+        return props.classNameMap[props.setValue] === undefined
+          ? new Error(
+              "Invalid prop `setValue` supplied to `TableDragSelect`, must be represented in `classNameMap`"
+            )
+          : undefined;
+      }
+      if (props.setValue === undefined || typeof props.setValue === "boolean") {
+        return;
+      }
+      return new Error(
+        "Invalid prop `setValue` supplied to `TableDragSelect`, must be represented in `classNameMap` or be boolean"
+      );
+    },
     maxRows: PropTypes.number,
     maxColumns: PropTypes.number,
     onSelectionStart: PropTypes.func,
@@ -125,13 +149,17 @@ export default class TableDragSelect extends React.Component {
       e.preventDefault();
       const { row, column } = eventToCellLocation(e);
       this.props.onSelectionStart({ row, column });
+      let addMode = !this.props.value[row][column];
+      if (this.props.setValue !== undefined) {
+        addMode = this.props.setValue;
+      }
       this.setState({
         selectionStarted: true,
         startRow: row,
         startColumn: column,
         endRow: row,
         endColumn: column,
-        addMode: !this.props.value[row][column]
+        addMode: addMode
       });
     }
   };
