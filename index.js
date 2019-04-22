@@ -15,16 +15,41 @@ export default class TableDragSelect extends React.Component {
         return;
       }
       const columnCount = props.value[0].length;
+      const hasClassNameMap = props.classNameMap !== undefined;
       for (const row of props.value) {
         if (!Array.isArray(row) || row.length !== columnCount) {
           return error;
         }
         for (const cell of row) {
+          if (hasClassNameMap) {
+            if (props.classNameMap[cell] === undefined) {
+              return error;
+            } else {
+              return;
+            }
+          }
           if (typeof cell !== "boolean") {
             return error;
           }
         }
       }
+    },
+    classNameMap: PropTypes.objectOf(PropTypes.string),
+    setValue: props => {
+      const hasClassNameMap = props.classNameMap !== undefined;
+      if (hasClassNameMap) {
+        return props.classNameMap[props.setValue] === undefined
+          ? new Error(
+              "Invalid prop `setValue` supplied to `TableDragSelect`, must be represented in `classNameMap`"
+            )
+          : undefined;
+      }
+      if (props.setValue === undefined || typeof props.setValue === "boolean") {
+        return;
+      }
+      return new Error(
+        "Invalid prop `setValue` supplied to `TableDragSelect`, must be represented in `classNameMap` or be boolean"
+      );
     },
     maxRows: PropTypes.number,
     maxColumns: PropTypes.number,
@@ -89,7 +114,9 @@ export default class TableDragSelect extends React.Component {
   render = () => {
     return (
       <table className="table-drag-select">
-        <tbody>{this.renderRows()}</tbody>
+        <tbody>
+          {this.renderRows()}
+        </tbody>
       </table>
     );
   };
@@ -98,18 +125,19 @@ export default class TableDragSelect extends React.Component {
     React.Children.map(this.props.children, (tr, i) => {
       return (
         <tr key={i} {...tr.props}>
-          {React.Children.map(tr.props.children, (cell, j) => (
+          {React.Children.map(tr.props.children, (cell, j) =>
             <Cell
               key={j}
               onTouchStart={this.handleTouchStartCell}
               onTouchMove={this.handleTouchMoveCell}
+              classNameMap={this.props.classNameMap}
               selected={this.props.value[i][j]}
               beingSelected={this.isCellBeingSelected(i, j)}
               {...cell.props}
             >
               {cell.props.children}
             </Cell>
-          ))}
+          )}
         </tr>
       );
     });
@@ -121,13 +149,17 @@ export default class TableDragSelect extends React.Component {
       e.preventDefault();
       const { row, column } = eventToCellLocation(e);
       this.props.onSelectionStart({ row, column });
+      let addMode = !this.props.value[row][column];
+      if (this.props.setValue !== undefined) {
+        addMode = this.props.setValue;
+      }
       this.setState({
         selectionStarted: true,
         startRow: row,
         startColumn: column,
         endRow: row,
         endColumn: column,
-        addMode: !this.props.value[row][column]
+        addMode: addMode
       });
     }
   };
@@ -228,6 +260,7 @@ class Cell extends React.Component {
       className = "",
       disabled,
       beingSelected,
+      classNameMap = { true: "cell-selected", false: "" },
       selected,
       onTouchStart,
       onTouchMove,
@@ -237,9 +270,8 @@ class Cell extends React.Component {
       className += " cell-disabled";
     } else {
       className += " cell-enabled";
-      if (selected) {
-        className += " cell-selected";
-      }
+
+      className += ` ${classNameMap[selected]}`;
       if (beingSelected) {
         className += " cell-being-selected";
       }
