@@ -1,53 +1,88 @@
 .table-drag-select {
   /* Stretch horizontally to fill parent */
+
   width: 100%;
-  /* Keep columns same width */
-  table-layout: fixed;
-  /* Disable text selection */
-  user-select: none;
-  /* Center in parent */
-  margin-left: auto;
   margin-right: auto;
+
+  /* Center in parent */
+
+  margin-left: auto;
+
+  /* Keep columns same width */
+
+  table-layout: fixed;
+
+  /* Disable text selection */
+
+  user-select: none;
+
   /* Remove space between border */
+
   border-collapse: collapse;
 }
 
 /* Table cells */
 .table-drag-select td {
-  text-align: center;
-  /* Cut off long strings of text with ... */
-  text-overflow: ellipsis;
   overflow: hidden;
+
+  padding-right: 0;
+
+  /* Shows more text when text too big to fit into cell */
+
+  padding-left: 0;
+
+  text-align: center;
+
+  /* Cut off long strings of text with ... */
+
+  text-overflow: ellipsis;
+
   /* Make transparent gaps between cells. Better than relying on margin
    * because clicking an element's margin doesn't trigger events */
-  border: 0.7rem solid transparent;
+
+  border: 0.5rem solid transparent;
   background-clip: padding-box;
+
+  font-size: 14px;
+
   /* Make cells reasonable size */
-  line-height: 3rem;
-  /* Shows more text when text too big to fit into cell */
-  padding-left: 0rem;
-  padding-right: 0rem;
+
+  line-height: 2rem;
 }
 
 /* Cells that can be interacted with */
 .table-drag-select td.cell-enabled {
-  background-color: #DDD;
   /* Make the cursor a + symbol */
+
   cursor: cell;
+
+  background-color: #DDDDDD;
 }
 
 /* Cells that cannot be interacted with */
-.table-drag-select td.cell-disabled {
-  /* Put yer css here */
+.table-drag-select td.cell-disabled,
+.table-drag-select td.cell-not-editable {
+  pointer-events: none;
+}
+
+.table-drag-select td.cell-disabled--filled {
+  opacity: 0.7;
+  background-color: #E67F3F;
+}
+
+.table-drag-select td.cell-disabled--empty {
+  opacity: 0.7;
+  background-color: #999999;
 }
 
 /* Cells that have been selected */
 .table-drag-select td.cell-selected {
-  background-color: #A9A9A9;
+  background-color: #E67F3F;
 }
 
 /* Cells that are in the process of being selected */
 .table-drag-select td.cell-being-selected {
   /* This is the blue color you see when you select text with the cursor */
+
   background-color: #3F83D5;
 }

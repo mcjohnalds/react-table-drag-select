@@ -1,13 +1,15 @@
-import React from "react";
-import clone from "clone";
-import PropTypes from "prop-types";
+import React from 'react';
+import clone from 'clone';
+import PropTypes from 'prop-types';
+import './style.css';
 
 export default class TableDragSelect extends React.Component {
   static propTypes = {
-    value: props => {
+    value: (props) => {
       const error = new Error(
-        "Invalid prop `value` supplied to `TableDragSelect`. Validation failed."
+        'Invalid prop `value` supplied to `TableDragSelect`. Validation failed.',
       );
+
       if (!Array.isArray(props.value)) {
         return error;
       }
@@ -15,12 +17,13 @@ export default class TableDragSelect extends React.Component {
         return;
       }
       const columnCount = props.value[0].length;
+
       for (const row of props.value) {
         if (!Array.isArray(row) || row.length !== columnCount) {
           return error;
         }
         for (const cell of row) {
-          if (typeof cell !== "boolean") {
+          if (typeof cell !== 'boolean') {
             return error;
           }
         }
@@ -31,31 +34,33 @@ export default class TableDragSelect extends React.Component {
     onSelectionStart: PropTypes.func,
     onInput: PropTypes.func,
     onChange: PropTypes.func,
-    children: props => {
+    children: (props) => {
       if (TableDragSelect.propTypes.value(props)) {
         return; // Let error be handled elsewhere
       }
       const error = new Error(
-        "Invalid prop `children` supplied to `TableDragSelect`. Validation failed."
+        'Invalid prop `children` supplied to `TableDragSelect`. Validation failed.',
       );
       const trs = React.Children.toArray(props.children);
       const rowCount = props.value.length;
       const columnCount = props.value.length === 0 ? 0 : props.value[0].length;
+
       if (trs.length !== rowCount) {
         return error;
       }
       for (const tr of trs) {
         const tds = React.Children.toArray(tr.props.children);
-        if (tr.type !== "tr" || tds.length !== columnCount) {
+
+        if (tr.type !== 'tr' || tds.length !== columnCount) {
           return error;
         }
         for (const td of tds) {
-          if (td.type !== "td") {
+          if (td.type !== 'td') {
             return error;
           }
         }
       }
-    }
+    },
   };
 
   static defaultProps = {
@@ -64,7 +69,7 @@ export default class TableDragSelect extends React.Component {
     maxColumns: Infinity,
     onSelectionStart: () => {},
     onInput: () => {},
-    onChange: () => {}
+    onChange: () => {},
   };
 
   state = {
@@ -73,22 +78,22 @@ export default class TableDragSelect extends React.Component {
     startColumn: null,
     endRow: null,
     endColumn: null,
-    addMode: null
+    addMode: null,
   };
 
   componentDidMount = () => {
-    window.addEventListener("mouseup", this.handleTouchEndWindow);
-    window.addEventListener("touchend", this.handleTouchEndWindow);
+    window.addEventListener('mouseup', this.handleTouchEndWindow);
+    window.addEventListener('touchend', this.handleTouchEndWindow);
   };
 
   componentWillUnmount = () => {
-    window.removeEventListener("mouseup", this.handleTouchEndWindow);
-    window.removeEventListener("touchend", this.handleTouchEndWindow);
+    window.removeEventListener('mouseup', this.handleTouchEndWindow);
+    window.removeEventListener('touchend', this.handleTouchEndWindow);
   };
 
   render = () => {
     return (
-      <table className="table-drag-select">
+      <table className="table-drag-select" data-qa="table_drag_select">
         <tbody>{this.renderRows()}</tbody>
       </table>
     );
@@ -114,12 +119,14 @@ export default class TableDragSelect extends React.Component {
       );
     });
 
-  handleTouchStartCell = e => {
+  handleTouchStartCell = (e) => {
     const isLeftClick = e.button === 0;
-    const isTouch = e.type !== "mousedown";
+    const isTouch = e.type !== 'mousedown';
+
     if (!this.state.selectionStarted && (isLeftClick || isTouch)) {
       e.preventDefault();
       const { row, column } = eventToCellLocation(e);
+
       this.props.onSelectionStart({ row, column });
       this.setState({
         selectionStarted: true,
@@ -127,12 +134,12 @@ export default class TableDragSelect extends React.Component {
         startColumn: column,
         endRow: row,
         endColumn: column,
-        addMode: !this.props.value[row][column]
+        addMode: !this.props.value[row][column],
       });
     }
   };
 
-  handleTouchMoveCell = e => {
+  handleTouchMoveCell = (e) => {
     if (this.state.selectionStarted) {
       e.preventDefault();
       const { row, column } = eventToCellLocation(e);
@@ -159,22 +166,25 @@ export default class TableDragSelect extends React.Component {
     }
   };
 
-  handleTouchEndWindow = e => {
+  handleTouchEndWindow = (e) => {
     const isLeftClick = e.button === 0;
-    const isTouch = e.type !== "mousedown";
+    const isTouch = e.type !== 'mousedown';
+
     if (this.state.selectionStarted && (isLeftClick || isTouch)) {
       const value = clone(this.props.value);
       const minRow = Math.min(this.state.startRow, this.state.endRow);
       const maxRow = Math.max(this.state.startRow, this.state.endRow);
+
       for (let row = minRow; row <= maxRow; row++) {
         const minColumn = Math.min(
           this.state.startColumn,
-          this.state.endColumn
+          this.state.endColumn,
         );
         const maxColumn = Math.max(
           this.state.startColumn,
-          this.state.endColumn
+          this.state.endColumn,
         );
+
         for (let column = minColumn; column <= maxColumn; column++) {
           value[row][column] = this.state.addMode;
         }
@@ -192,61 +202,55 @@ export default class TableDragSelect extends React.Component {
 
     return (
       this.state.selectionStarted &&
-      (row >= minRow &&
-        row <= maxRow &&
-        column >= minColumn &&
-        column <= maxColumn)
+      row >= minRow &&
+      row <= maxRow &&
+      column >= minColumn &&
+      column <= maxColumn
     );
   };
 }
 
 class Cell extends React.Component {
-  // This optimization gave a 10% performance boost while drag-selecting
-  // cells
-  shouldComponentUpdate = nextProps =>
-    this.props.beingSelected !== nextProps.beingSelected ||
-    this.props.selected !== nextProps.selected;
-
   componentDidMount = () => {
     // We need to call addEventListener ourselves so that we can pass
     // {passive: false}
-    this.td.addEventListener("touchstart", this.handleTouchStart, {
-      passive: false
+    this.td.addEventListener('touchstart', this.handleTouchStart, {
+      passive: false,
     });
-    this.td.addEventListener("touchmove", this.handleTouchMove, {
-      passive: false
+    this.td.addEventListener('touchmove', this.handleTouchMove, {
+      passive: false,
     });
   };
 
   componentWillUnmount = () => {
-    this.td.removeEventListener("touchstart", this.handleTouchStart);
-    this.td.removeEventListener("touchmove", this.handleTouchMove);
+    this.td.removeEventListener('touchstart', this.handleTouchStart);
+    this.td.removeEventListener('touchmove', this.handleTouchMove);
   };
 
   render = () => {
     let {
-      className = "",
-      disabled,
+      className = '',
       beingSelected,
       selected,
       onTouchStart,
       onTouchMove,
       ...props
     } = this.props;
-    if (disabled) {
-      className += " cell-disabled";
-    } else {
-      className += " cell-enabled";
+
+    if (!className.includes('cell-disabled')) {
+      className += ' cell-enabled';
+
       if (selected) {
-        className += " cell-selected";
+        className += ' cell-selected';
       }
       if (beingSelected) {
-        className += " cell-being-selected";
+        className += ' cell-being-selected';
       }
     }
+
     return (
       <td
-        ref={td => (this.td = td)}
+        ref={(td) => (this.td = td)}
         className={className}
         onMouseDown={this.handleTouchStart}
         onMouseMove={this.handleTouchMove}
@@ -257,14 +261,18 @@ class Cell extends React.Component {
     );
   };
 
-  handleTouchStart = e => {
-    if (!this.props.disabled) {
+  handleTouchStart = (e) => {
+    const { className } = this.props;
+
+    if (!(className && className.includes('cell-disabled'))) {
       this.props.onTouchStart(e);
     }
   };
 
-  handleTouchMove = e => {
-    if (!this.props.disabled) {
+  handleTouchMove = (e) => {
+    const { className } = this.props;
+
+    if (!(className && className.includes('cell-disabled'))) {
       this.props.onTouchMove(e);
     }
   };
@@ -275,22 +283,25 @@ class Cell extends React.Component {
 //
 // eventToCellLocation(event);
 // {row: 2, column: 3}
-const eventToCellLocation = e => {
+const eventToCellLocation = (e) => {
   let target;
   // For touchmove and touchend events, e.target and e.touches[n].target are
   // wrong, so we have to rely on elementFromPoint(). For mouse clicks, we have
   // to use e.target.
+
   if (e.touches) {
     const touch = e.touches[0];
+
     target = document.elementFromPoint(touch.clientX, touch.clientY);
   } else {
     target = e.target;
-    while (target.tagName !== "TD") {
+    while (target.tagName !== 'TD') {
       target = target.parentNode;
     }
   }
+
   return {
     row: target.parentNode.rowIndex,
-    column: target.cellIndex
+    column: target.cellIndex,
   };
 };
